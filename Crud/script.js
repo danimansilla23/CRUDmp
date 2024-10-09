@@ -1,10 +1,9 @@
 $(document).ready(function () {
     $.ajax({
         type: "GET",
-        url: "http://localhost:4567/getMateriasPrimas", // Cambia esto a tu endpoint correcto
+        url: "http://localhost:4567/getMateriasPrimas", 
         dataType: "json",
         success: function (result) {
-            console.log(result); // Para verificar la respuesta
             
             // Construir la tabla
             var tablaMateriasPrimas = '<table class="table table-rosa"><tr><th>ID</th><th>NOMBRE</th><th>STOCK</th><th>VTO</th><th>ACCIONES</th></tr>';
@@ -17,7 +16,7 @@ $(document).ready(function () {
                     "</td><td>" +
                     element.stock + " " + element.unidades +
                     "</td><td>" +
-                    element.fecha_vto_prox +
+                    element.fecha_vto_aprox +
                     "</td><td>" +
                     '<button class="btn btn-warning btn-sm edit-button" data-id="' + element.id_MateriaPrima + '">Editar</button> ' +
                     '<button class="btn btn-danger btn-sm delete-button" data-id="' + element.id_MateriaPrima + '">Eliminar</button>' +
@@ -33,17 +32,46 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".edit-button", function () {
-        var id = $(this).data("id");
+       // var id = $(this).data("id");
         // Aquí puedes buscar el elemento por ID para prellenar los campos del modal
         var row = $(this).closest("tr");
         var nombre = row.find("td:eq(1)").text(); // Suponiendo que el nombre está en la segunda celda
-        var stock = row.find("td:eq(3)").text(); // Suponiendo que el stock está en la cuarta celda
+        var stock = row.find("td:eq(2)").text();
+        var stockNumber = stock.match(/\d+/)[0]; // Obtiene el primer número encontrado
+        var vto = row.find("td:eq(3)").text();
+
+        console.log(row.find("td:eq(3)").text());
         
         // Prellenar el modal con la información del elemento
-        $("#materiaPrima-id").val(id);
+        //$("#materiaPrima-id").val(id);
         $("#materiaPrima-nombre").val(nombre);
-        $("#materiaPrima-stock").val(stock);
+        $("#materiaPrima-stock").val(stockNumber);
         
+
+    // Convertir la fecha a formato YYYY-MM-DD
+    var months = {
+        "ene": "January",
+        "feb": "February",
+        "mar": "March",
+        "abr": "April",
+        "may": "May",
+        "jun": "June",
+        "jul": "July",
+        "ago": "August",
+        "sep": "September",
+        "oct": "October",
+        "nov": "November",
+        "dic": "December"
+    };
+    // Convertir el texto a un formato que el objeto Date pueda reconocer
+    var vtoParts = vto.split(" ");
+    var month = months[vtoParts[0].toLowerCase()]; // Convertir a mes completo
+    var day = vtoParts[1];
+    var year = vtoParts[2];
+    var formattedDate = new Date(`${month} ${day}, ${year}`).toISOString().split("T")[0];
+    $("#materiaPrima-vto").val(formattedDate); // Asignar la fecha formateada
+        
+
         // Abrir el modal
         var modal = new bootstrap.Modal(document.getElementById('modal'));
         modal.show();

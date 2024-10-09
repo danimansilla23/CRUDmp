@@ -30,10 +30,6 @@
                         <div class="modal-body">
                             <form id="modalForm">
                                 <div class="mb-3">
-                                    <label for="materiaPrima-id" class="col-form-label">ID:</label>
-                                    <input type="text" class="form-control" id="materiaPrima-id" readonly>
-                                </div>
-                                <div class="mb-3">
                                     <label for="materiaPrima-nombre" class="col-form-label">Nombre:</label>
                                     <input type="text" class="form-control" id="materiaPrima-nombre">
                                 </div>
@@ -41,11 +37,14 @@
                                     <label for="materiaPrima-stock" class="col-form-label">Stock:</label>
                                     <input type="number" class="form-control" id="materiaPrima-stock">
                                 </div>
+                                <div class="mb-3">
+                                    <label for="materiaPrima-vto" class="col-form-label">VTO:</label>
+                                    <input type="date" class="form-control" id="materiaPrima-vto">
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-danger" id="delete-button">Eliminar</button>
                             <button type="button" class="btn btn-primary" id="save-button">Guardar cambios</button>
                         </div>
                     </div>
