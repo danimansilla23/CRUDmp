@@ -1,0 +1,17 @@
+
+      
+        .table-rosa th{
+            background-color: #ff399c;
+        }
+        .table-rosa td {
+            background-color: #faabd2;
+        }
+
+        .table-rosa{
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+            margin-top: 3%;
+        }
+
+        body{
+            background-color: #272727;
+        }
