@@ -1,0 +1,21 @@
+
+ALTER TABLE materiasprimas AUTO_INCREMENT = 1;
+INSERT INTO MateriasPrimas (nombre_MP, fecha_ven, stock, unidades) VALUES
+('Harina de trigo', '2024-12-31', 50, 'kg'),
+('Azúcar', '2025-01-15', 100, 'kg'),
+('Huevos', '2024-10-20', 200, 'unidades'),
+('Leche', '2024-10-12', 80, 'litros'),
+('Manteca', '2024-11-05', 60, 'kg'),
+('Dulce de leche', '2024-09-30', 40, 'kg'),
+('Chocolate amargo', '2025-02-28', 30, 'kg'),
+('Frutillas', '2024-10-10', 20, 'kg'),
+('Coco rallado', '2024-12-20', 25, 'kg'),
+('Levadura', '2025-01-30', 15, 'kg');
+
+
+
+para actualizar : 
+http://localhost:4567/updateMateriaPrima/1?nombre_MP=Harina &unidades=Gramos&stock=20&fecha_vto_prox=2025-01-02
+
+para agregar : 
+http://localhost:4567/producto/addMateriaPrima?nombre_MP=Oreos&unidades=unidades&stock=100&fecha_vto_prox=2025-01-02
