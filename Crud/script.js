@@ -6,7 +6,7 @@ $(document).ready(function () {
         success: function (result) {
             
             // Construir la tabla
-            var tablaMateriasPrimas = '<table class="table table-rosa"><tr><th>ID</th><th>NOMBRE</th><th>STOCK</th><th>VTO</th><th>ACCIONES</th></tr>';
+            var tablaMateriasPrimas = '<table class="table table-rosa"><tr><th>ID</th><th>NOMBRE</th><th>STOCK</th><th>UNIDAD</th><th>VTO</th><th>ACCIONES</th></tr>';
             result.forEach(function (element) {
                 tablaMateriasPrimas +=
                     "<tr><td>" +
@@ -14,9 +14,11 @@ $(document).ready(function () {
                     "</td><td>" +
                     element.nombre_MP +
                     "</td><td>" +
-                    element.stock + " " + element.unidades +
+                    element.stock + 
+                    "</td><td>" + 
+                    element.unidades +
                     "</td><td>" +
-                    element.fecha_vto_aprox +
+                    element.fecha_vto_prox +
                     "</td><td>" +
                     '<button class="btn btn-warning btn-sm edit-button" data-id="' + element.id_MateriaPrima + '">Editar</button> ' +
                     '<button class="btn btn-danger btn-sm delete-button" data-id="' + element.id_MateriaPrima + '">Eliminar</button>' +
@@ -32,20 +34,19 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".edit-button", function () {
-       // var id = $(this).data("id");
+        var id = $(this).data("id");
         // Aquí puedes buscar el elemento por ID para prellenar los campos del modal
         var row = $(this).closest("tr");
         var nombre = row.find("td:eq(1)").text(); // Suponiendo que el nombre está en la segunda celda
         var stock = row.find("td:eq(2)").text();
-        var stockNumber = stock.match(/\d+/)[0]; // Obtiene el primer número encontrado
-        var vto = row.find("td:eq(3)").text();
-
-        console.log(row.find("td:eq(3)").text());
+        var unidad = row.find("td:eq(3)").text();
+        var vto = row.find("td:eq(4)").text();
         
         // Prellenar el modal con la información del elemento
-        //$("#materiaPrima-id").val(id);
+        $("#materiaPrima-id").val(id);
         $("#materiaPrima-nombre").val(nombre);
-        $("#materiaPrima-stock").val(stockNumber);
+        $("#materiaPrima-stock").val(stock);
+        $("#materiaPrima-unidad").val(unidad);
         
 
     // Convertir la fecha a formato YYYY-MM-DD
@@ -76,4 +77,36 @@ $(document).ready(function () {
         var modal = new bootstrap.Modal(document.getElementById('modal'));
         modal.show();
     });
+
+
+    $(document).on("click", "#save-button", function () {
+    var id = $("#materiaPrima-id").val();
+    var nombre = $("#materiaPrima-nombre").val();
+    var stock = $("#materiaPrima-stock").val();
+    var unidad = $("#materiaPrima-unidad").val();
+    var vto = $("#materiaPrima-vto").val();
+    
+    var url = "http://localhost:4567/updateMateriaPrima/" + id + "?nombre_MP=" + encodeURIComponent(nombre) 
+                                                            + "&unidades=" + encodeURIComponent(unidad) + 
+                                                            "&stock=" + encodeURIComponent(stock) + 
+                                                            "&fecha_vto_prox=" + 
+                                                            encodeURIComponent('2025-01-02');
+
+    // Realizar la solicitud AJAX
+    $.ajax({
+        type: "PUT", // Asegúrate de que sea un PUT
+        url: url,
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            alert("Materia prima actualizada exitosamente.");
+            // Aquí puedes actualizar la tabla o realizar otras acciones
+        },
+        error: function (xhr, status, error) {
+            console.error("Error en la solicitud:", status, error);
+            alert("Error al actualizar la materia prima.");
+        }
+    });
+
+    }); 
 });
